@@ -1,0 +1,89 @@
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+
+// class FridgeService {
+//   static const String baseUrl = 'http://127.0.0.1:8000';
+//   static Future<List<dynamic>> getFridgeItems(
+//     String accessToken,
+//   ) async {
+//     final response = await http.get(
+//       Uri.parse('$baseUrl/fridge-items'),
+//       headers: {
+//         'Authorization': 'Bearer $accessToken',
+//         'Content-Type': 'application/json',
+//       },
+//     );
+
+//     return jsonDecode(response.body);
+//   }
+// }
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'auth_service.dart';
+
+class FridgeService {
+  // static const String baseUrl = 'http://127.0.0.1:8000';
+  static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
+  // final token = AuthService.access_token;
+
+  static Future<List<dynamic>> getItems() async {
+    final token = AuthService.access_token;
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/fridge/items'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+
+      },
+    );
+    print(response);
+    return jsonDecode(response.body);
+  }
+
+  static Future<void> addItem(
+    Map<String, dynamic> item,
+  ) async {
+    final token = AuthService.access_token;
+
+    await http.post(
+      Uri.parse('$baseUrl/fridge-items'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(item),
+    );
+  }
+
+  static Future<void> updateItem(
+    String id,
+    Map<String, dynamic> item,
+  ) async {
+    final token = AuthService.access_token;
+
+    await http.put(
+      Uri.parse('$baseUrl/fridge-items/$id'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(item),
+    );
+  }
+
+  static Future<void> deleteItem(
+    String id,
+  ) async {
+    final token = AuthService.access_token;
+
+
+    await http.delete(
+      Uri.parse('$baseUrl/fridge-items/$id'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+  }
+}
