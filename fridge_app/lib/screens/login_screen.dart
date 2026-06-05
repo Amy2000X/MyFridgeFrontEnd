@@ -3,6 +3,7 @@ import '../services/auth_service.dart';
 // import '../services/fridge_service.dart';
 import 'register_screen.dart';
 import 'fridge_screen.dart';
+import 'main_navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,11 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
         response["access_token"],
         );
 
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (_) => FridgeScreen(),
+          builder: (_) => MainNavigationScreen(),
         ),
+        (route) => false,
       );
     } else {
       setState(() {
