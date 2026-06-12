@@ -42,6 +42,29 @@ class FridgeService {
     return jsonDecode(response.body);
   }
 
+  static Future<void> scanBarcode(String ean) async {
+
+    final token = AuthService.access_token;
+
+    final response = await http.post(
+      Uri.parse('$baseUrl/fridge/scan-barcode'),
+
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+
+      body: jsonEncode({
+        "ean": ean,
+      }),
+    );
+
+    if (response.statusCode != 200 &&
+        response.statusCode != 201) {
+      throw Exception(response.body);
+    }
+  }
+
   static Future<void> addItem(
     Map<String, dynamic> item,
   ) async {
