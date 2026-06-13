@@ -19,6 +19,7 @@
 // }
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'auth_service.dart';
 
@@ -29,7 +30,7 @@ class FridgeService {
 
   static Future<List<dynamic>> getItems() async {
     final token = AuthService.access_token;
-
+    debugPrint("Get items in fridge service");
     final response = await http.get(
       Uri.parse('$baseUrl/fridge/items'),
       headers: {
@@ -38,7 +39,15 @@ class FridgeService {
 
       },
     );
-    print(response);
+    debugPrint("Successfully retreived the items");
+    // debugPrint(response.toString());
+
+    debugPrint("Status code: ${response.statusCode}");
+    debugPrint("Body: ${response.body}");
+
+    final data = jsonDecode(response.body);
+
+    debugPrint("Decoded type: ${data.runtimeType}");
     return jsonDecode(response.body);
   }
 
@@ -58,6 +67,9 @@ class FridgeService {
         "ean": ean,
       }),
     );
+    debugPrint(response.toString());
+    debugPrint(response.body.toString());
+
 
     if (response.statusCode != 200 &&
         response.statusCode != 201) {

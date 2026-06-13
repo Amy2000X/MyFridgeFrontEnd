@@ -24,7 +24,7 @@ class _FridgeScreenState extends State<FridgeScreen> {
   Future<void> loadItems() async {
     try {
       final result = await FridgeService.getItems();
-
+    
       setState(() {
         items = result;
         isLoading = false;
@@ -35,7 +35,7 @@ class _FridgeScreenState extends State<FridgeScreen> {
         isLoading = false;
       });
 
-      print('Error loading items: $e');
+      debugPrint('Error loading items: $e');
     }
   }
 
@@ -77,7 +77,7 @@ class _FridgeScreenState extends State<FridgeScreen> {
                             ),
                             child: ListTile(
                               title: Text(
-                                item['name'] ?? '',
+                                item['products']?['name'] ?? '',
                               ),
                               subtitle: Text(
                                 '${item['quantity']} ${item['unit']}',
