@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/recipe_match.dart';
+import '../services/grocery_service.dart';
 
 class RecipeDetailScreen
     extends StatefulWidget {
@@ -107,22 +108,73 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               ),
             ),
 
-            ...widget.recipeMatch
-                .missingIngredients
-                .map(
-                  (ingredient) =>
-                      ListTile(
-                    leading:
-                        const Icon(
-                      Icons.close,
-                      color:
-                          Colors.red,
+            Column(
+              children: widget
+                  .recipeMatch
+                  .missingIngredients
+                  .map(
+                    (ingredient) =>
+                        CheckboxListTile(
+                      value:
+                          selectedIngredients
+                              .contains(
+                        ingredient,
+                      ),
+                      title:
+                          Text(ingredient),
+                      onChanged: (value) {
+                        setState(() {
+                          if (value == true) {
+                            selectedIngredients
+                                .add(
+                              ingredient,
+                            );
+                          } else {
+                            selectedIngredients
+                                .remove(
+                              ingredient,
+                            );
+                          }
+                        });
+                      },
                     ),
-                    title: Text(
-                      ingredient,
-                    ),
-                  ),
+                  )
+                  .toList(),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(
+                  Icons.shopping_cart,
                 ),
+                label: const Text(
+                  "Add Selected To Grocery List",
+                ),
+                onPressed: () async {
+
+                  for (final ingredient
+                      in selectedIngredients) {
+
+                    await GroceryService
+                        .addIngredient(
+                      ingredient,
+                    );
+                  }
+
+                  if (!mounted) return;
+
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Added to grocery list",
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
 
             const SizedBox(
               height: 24,
