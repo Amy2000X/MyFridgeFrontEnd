@@ -1,23 +1,3 @@
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
-
-// class FridgeService {
-//   static const String baseUrl = 'http://127.0.0.1:8000';
-//   static Future<List<dynamic>> getFridgeItems(
-//     String accessToken,
-//   ) async {
-//     final response = await http.get(
-//       Uri.parse('$baseUrl/fridge-items'),
-//       headers: {
-//         'Authorization': 'Bearer $accessToken',
-//         'Content-Type': 'application/json',
-//       },
-//     );
-
-//     return jsonDecode(response.body);
-//   }
-// }
-
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
