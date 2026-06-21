@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/recipe_match.dart';
@@ -36,5 +37,37 @@ class RecipeService {
           (e) => RecipeMatch.fromJson(e),
         )
         .toList();
+  }
+
+  static Future<Map<String, dynamic>> cookRecipe(int recipeId, bool force,) async {
+    final token = AuthService.access_token;
+
+    final response =
+        await http.post(
+      Uri.parse(
+        "$baseUrl/recipes/cook",
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "recipe_id": recipeId,
+        "force": force,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        "Failed to cook",
+      );
+    }
+    debugPrint("testing response recipe service");
+    debugPrint(response.toString());
+    debugPrint(response.body.toString());
+
+    return jsonDecode(
+      response.body,
+    );
   }
 }
