@@ -6,6 +6,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AuthService.loadToken();
 
+   await AuthService.loadToken();
+  bool tokenCheck = await AuthService.checkToken();
+  if (!tokenCheck) {
+    await AuthService.deleteToken();
+  }
+
   runApp(const MyApp());
 }
 

@@ -9,7 +9,7 @@ class FridgeService {
   // final token = AuthService.access_token;
 
   static Future<List<dynamic>> getItems() async {
-    final token = AuthService.access_token;
+    final token = AuthService.accessToken;
     debugPrint("Get items in fridge service");
     final response = await http.get(
       Uri.parse('$baseUrl/fridge/items'),

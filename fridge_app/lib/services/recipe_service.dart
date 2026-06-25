@@ -40,7 +40,7 @@ class RecipeService {
   }
 
   static Future<Map<String, dynamic>> cookRecipe(int recipeId, bool force,) async {
-    final token = AuthService.access_token;
+    final token = AuthService.accessToken;
 
     final response =
         await http.post(

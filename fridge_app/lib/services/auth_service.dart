@@ -1,15 +1,31 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:fridge_app/services/fridge_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   static const storage = FlutterSecureStorage();
-  static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
+  // static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
+    static const String baseUrl = 'http://127.0.0.1:8000';
 
-  static String? access_token;
+  static String? accessToken;
+
+  static Future<bool> checkToken () async {
+    try {
+      final response = FridgeService.getItems();
+      debugPrint(response.toString());
+
+      return true;
+    }
+    catch (e) {
+      return false;
+    }
+    
+  }
 
   static Future<void> saveToken (String token) async {
-    access_token = token;
+    accessToken = token;
 
     await storage.write(
       key: 'auth_token', value: token
@@ -17,7 +33,7 @@ class AuthService {
   }
 
   static Future<void> loadToken() async {
-    access_token = await storage.read(key: 'auth_token');
+    accessToken = await storage.read(key: 'auth_token');
   }
 
   static Future<void> deleteToken() async {
@@ -28,7 +44,7 @@ class AuthService {
     String email,
     String password,
   ) async {
-    print("LOGIN URL: $baseUrl/auth/login");
+    // debugPrint("LOGIN URL: $baseUrl/auth/login");
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login'),
       headers: {
@@ -47,7 +63,7 @@ class AuthService {
     String email,
     String password,
   ) async {
-    print("REGISTER URL: $baseUrl/auth/register");
+    // print("REGISTER URL: $baseUrl/auth/register");
     final response = await http.post(
       Uri.parse('$baseUrl/auth/register'),
       headers: {

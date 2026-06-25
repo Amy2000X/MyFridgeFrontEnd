@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = AuthService.access_token;
+    final token = AuthService.accessToken;
 
     if (token == null || token.isEmpty) {
       return const LoginScreen();
