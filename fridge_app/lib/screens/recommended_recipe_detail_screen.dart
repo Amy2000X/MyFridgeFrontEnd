@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../models/recipe_match.dart';
-// import '../services/grocery_service.dart';
 import '../services/recipe_service.dart';
 
 class RecommendedRecipeDetailScreen extends StatefulWidget {
@@ -30,34 +29,6 @@ class _RecommendedRecipeDetailScreenState
     );
   }
 
-  // Future<void> addToGroceryList() async {
-  //   try {
-  //     await GroceryService.addItems(
-  //       selectedIngredients.toList(),
-  //     );
-
-  //     if (!mounted) return;
-
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text(
-  //           "Ingredients added to grocery list",
-  //         ),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     if (!mounted) return;
-
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(
-  //           e.toString(),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  // }
-
   Future<void> cookRecipe() async {
     try {
       final recipeId =
@@ -68,8 +39,6 @@ class _RecommendedRecipeDetailScreenState
         recipeId,
         false,
       );
-      debugPrint("printing cookrecipe response in recipe detail screen");
-      debugPrint(response.toString());
 
       if (response["requires_confirmation"] ==
           true) {
@@ -117,10 +86,6 @@ class _RecommendedRecipeDetailScreenState
           );
 
           if (!mounted) return;
-
-          debugPrint(
-            "Final cook response: $cookResponse",
-          );
 
           final deductedIngredients =
               cookResponse["deducted"]
@@ -311,30 +276,6 @@ class _RecommendedRecipeDetailScreenState
             const SizedBox(
               height: 16,
             ),
-
-            // SizedBox(
-            //   width:
-            //       double.infinity,
-            //   child:
-            //       ElevatedButton.icon(
-            //     onPressed:
-            //         selectedIngredients
-            //                 .isEmpty
-            //             ? null
-            //             : addToGroceryList,
-            //     icon: const Icon(
-            //       Icons
-            //           .shopping_cart,
-            //     ),
-            //     label: Text(
-            //       "Add ${selectedIngredients.length} items to grocery list",
-            //     ),
-            //   ),
-            // ),
-
-            // const SizedBox(
-            //   height: 24,
-            // ),
 
             SizedBox(
               width:

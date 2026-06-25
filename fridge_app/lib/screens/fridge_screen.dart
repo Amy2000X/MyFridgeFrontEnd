@@ -35,7 +35,6 @@ class _FridgeScreenState extends State<FridgeScreen> {
         isLoading = false;
       });
 
-      debugPrint('Error loading items: $e');
     }
   }
 

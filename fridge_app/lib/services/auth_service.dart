@@ -7,7 +7,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class AuthService {
   static const storage = FlutterSecureStorage();
   static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
-    // static const String baseUrl = 'http://127.0.0.1:8000';
 
   static String? accessToken;
 
@@ -44,7 +43,6 @@ class AuthService {
     String email,
     String password,
   ) async {
-    // debugPrint("LOGIN URL: $baseUrl/auth/login");
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login'),
       headers: {
@@ -63,7 +61,6 @@ class AuthService {
     String email,
     String password,
   ) async {
-    // print("REGISTER URL: $baseUrl/auth/register");
     final response = await http.post(
       Uri.parse('$baseUrl/auth/register'),
       headers: {

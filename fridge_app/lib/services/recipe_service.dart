@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:fridge_app/models/recipe.dart';
 import 'package:fridge_app/models/recipe_item.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +9,6 @@ import 'auth_service.dart';
 
 class RecipeService {
   static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
-  // static const String baseUrl = 'http://127.0.0.1:8000';
 
   static Future<List<Recipe>> getAllRecipes() async {
     final token = AuthService.accessToken;
@@ -33,7 +31,6 @@ class RecipeService {
 
     final List<dynamic> data =
         jsonDecode(response.body);
-        // debugPrint(response.body.toString());
 
     return data
         .map(
@@ -47,7 +44,6 @@ class RecipeService {
     
     final response = await http.get(
       Uri.parse(
-        // "$baseUrl/recipes/",
         "$baseUrl/recipes/search/$recipeId",
       ),
       headers: {
@@ -64,7 +60,6 @@ class RecipeService {
 
     final List<dynamic> data =
         jsonDecode(response.body);
-        // debugPrint(response.body.toString());
         
       
 
@@ -123,9 +118,6 @@ class RecipeService {
         "Failed to cook",
       );
     }
-    // debugPrint("testing response recipe service");
-    // debugPrint(response.toString());
-    // debugPrint(response.body.toString());
 
     return jsonDecode(
       response.body,

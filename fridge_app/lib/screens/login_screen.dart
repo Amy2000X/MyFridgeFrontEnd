@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-// import '../services/fridge_service.dart';
 import 'register_screen.dart';
-import 'fridge_screen.dart';
 import 'main_navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,7 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
   String message = '';
 
   Future<void> login() async {
-  print("LOGIN BUTTON PRESSED");
 
   try {
     final response = await AuthService.login(
@@ -28,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (response["access_token"] != null) {
-      print("LOGIN SUCCESS");
 
       await AuthService.saveToken(
         response["access_token"],
@@ -47,8 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   } catch (e) {
-    print("LOGIN ERROR:");
-    print(e);
 
     setState(() {
       message = e.toString();

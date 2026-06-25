@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_app/models/recipe.dart';
-import 'package:fridge_app/models/recipe_item.dart';
 import 'package:fridge_app/screens/recommended_recipe_screen.dart';
 
 import '../services/recipe_service.dart';

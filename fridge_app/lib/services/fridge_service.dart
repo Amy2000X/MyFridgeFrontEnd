@@ -5,7 +5,6 @@ import 'auth_service.dart';
 
 class FridgeService {
   static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
-  // static const String baseUrl = 'http://127.0.0.1:8000';
 
   static Future<List<dynamic>> getItems() async {
     final token = AuthService.accessToken;

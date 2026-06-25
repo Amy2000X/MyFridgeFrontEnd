@@ -31,8 +31,6 @@ class _RecipeDetailScreenState
         RecipeService.getIngredients(
       widget.recipeId,
     );
-    debugPrint("result recipeItemFuture:");
-    debugPrint(recipeItemFuture.toString());
   }
 
   Future<void> cookRecipe(

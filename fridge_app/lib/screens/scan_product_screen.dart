@@ -37,10 +37,7 @@ class _ScanProductScreenState extends State<ScanProductScreen> {
           if (scanned) return;
 
           final barcode = capture.barcodes.first;
-          debugPrint('format=${barcode.format} value=${barcode.rawValue}',);
           final String? ean = barcode.rawValue;
-          debugPrint('format=${barcode.format} value=${barcode.rawValue.toString()}',);
-          debugPrint('format=${barcode.format} ean value=${ean}',);
 
           if (ean == null) return;
 
@@ -74,14 +71,11 @@ class _ScanProductScreenState extends State<ScanProductScreen> {
               ),
             );
             if (result == 'home') {
-              // Navigator.pushNamed(context, '/home');
-              // // or:
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (_) => const HomeScreen()),
               );
             } else {
-              // User chose "Scan" -> restart scanner
               scanned = false;
               await controller.start();
               return;
