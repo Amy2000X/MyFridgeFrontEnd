@@ -9,8 +9,8 @@ import '../models/recipe_match.dart';
 import 'auth_service.dart';
 
 class RecipeService {
-  // static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
-  static const String baseUrl = 'http://127.0.0.1:8000';
+  static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
+  // static const String baseUrl = 'http://127.0.0.1:8000';
 
   static Future<List<Recipe>> getAllRecipes() async {
     final token = AuthService.accessToken;

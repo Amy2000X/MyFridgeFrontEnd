@@ -6,8 +6,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   static const storage = FlutterSecureStorage();
-  // static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
-    static const String baseUrl = 'http://127.0.0.1:8000';
+  static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
+    // static const String baseUrl = 'http://127.0.0.1:8000';
 
   static String? accessToken;
 
