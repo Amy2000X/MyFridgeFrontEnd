@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_app/models/recipe.dart';
+import 'package:fridge_app/models/recipe_item.dart';
+import 'package:fridge_app/screens/recommended_recipe_screen.dart';
 
-import '../models/recipe_match.dart';
 import '../services/recipe_service.dart';
 import 'recipe_detail_screen.dart';
 
@@ -12,7 +14,7 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
-  late Future<List<RecipeMatch>>
+  late Future<List<Recipe>>
       recipesFuture;
 
   @override
@@ -20,7 +22,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
     super.initState();
 
     recipesFuture =
-        RecipeService.getRecipeSuggestions();
+        RecipeService.getAllRecipes();
   }
 
   @override
@@ -28,11 +30,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Recommended Recipes",
+          "Recipes",
         ),
       ),
       body: FutureBuilder<
-          List<RecipeMatch>>(
+          List<Recipe>>(
         future: recipesFuture,
         builder:
             (context, snapshot) {
@@ -55,45 +57,60 @@ class _RecipeScreenState extends State<RecipeScreen> {
           final recipes =
               snapshot.data ?? [];
 
-          return ListView.builder(
-            itemCount: recipes.length,
-            itemBuilder:
-                (context, index) {
-              final recipe =
-                  recipes[index];
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: recipes.length,
+                  itemBuilder: (context, index) {
+                    final recipe = recipes[index];
 
-              return Card(
-                margin:
-                    const EdgeInsets.all(
-                  8,
-                ),
-                child: ListTile(
-                  title: Text(
-                    recipe.recipe["title"],
-                  ),
-                  subtitle: Text(
-                    "${recipe.matchCount}/${recipe.totalIngredients} ingredients available",
-                  ),
-                  trailing: const Icon(
-                    Icons
-                        .arrow_forward_ios,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (_) =>
-                                RecipeDetailScreen(
-                          recipeMatch:
-                              recipe,
+                    return Card(
+                      margin: const EdgeInsets.all(8),
+                      child: ListTile(
+                        title: Text(
+                          recipe.title,
                         ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  RecipeDetailScreen(
+                                    recipeId: recipe.id,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     );
                   },
                 ),
-              );
-            },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              const RecommendedRecipeScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Recipes With My Ingredients',
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),

@@ -21,10 +21,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     setState(() {
-      message = response['message'] ?? 'Something went wrong';
+      message = response['message'] ?? response['detail'] ?? "Something went wrong";
     });
 
-    print(response);
+    // print(response);
   }
 
   @override

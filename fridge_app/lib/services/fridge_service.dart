@@ -4,9 +4,8 @@ import 'package:http/http.dart' as http;
 import 'auth_service.dart';
 
 class FridgeService {
-  // static const String baseUrl = 'http://127.0.0.1:8000';
-  static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
-  // final token = AuthService.access_token;
+  // static const String baseUrl = 'https://myfridgebackend-xsow.onrender.com';
+  static const String baseUrl = 'http://127.0.0.1:8000';
 
   static Future<List<dynamic>> getItems() async {
     final token = AuthService.accessToken;
@@ -19,21 +18,12 @@ class FridgeService {
 
       },
     );
-    debugPrint("Successfully retreived the items");
-    // debugPrint(response.toString());
 
-    debugPrint("Status code: ${response.statusCode}");
-    debugPrint("Body: ${response.body}");
-
-    final data = jsonDecode(response.body);
-
-    debugPrint("Decoded type: ${data.runtimeType}");
     return jsonDecode(response.body);
   }
 
   static Future<void> scanBarcode(String ean) async {
-
-    final token = AuthService.access_token;
+    final token = AuthService.accessToken;
 
     final response = await http.post(
       Uri.parse('$baseUrl/fridge/scan-barcode'),
@@ -47,9 +37,6 @@ class FridgeService {
         "ean": ean,
       }),
     );
-    debugPrint(response.toString());
-    debugPrint(response.body.toString());
-
 
     if (response.statusCode != 200 &&
         response.statusCode != 201) {
@@ -57,10 +44,8 @@ class FridgeService {
     }
   }
 
-  static Future<void> addItem(
-    Map<String, dynamic> item,
-  ) async {
-    final token = AuthService.access_token;
+  static Future<void> addItem(Map<String, dynamic> item,) async {
+    final token = AuthService.accessToken;
 
     await http.post(
       Uri.parse('$baseUrl/fridge-items'),
@@ -72,11 +57,8 @@ class FridgeService {
     );
   }
 
-  static Future<void> updateItem(
-    String id,
-    Map<String, dynamic> item,
-  ) async {
-    final token = AuthService.access_token;
+  static Future<void> updateItem(String id, Map<String, dynamic> item,) async {
+    final token = AuthService.accessToken;
 
     await http.put(
       Uri.parse('$baseUrl/fridge-items/$id'),
@@ -88,11 +70,8 @@ class FridgeService {
     );
   }
 
-  static Future<void> deleteItem(
-    String id,
-  ) async {
-    final token = AuthService.access_token;
-
+  static Future<void> deleteItem(String id,) async {
+    final token = AuthService.accessToken;
 
     await http.delete(
       Uri.parse('$baseUrl/fridge-items/$id'),
